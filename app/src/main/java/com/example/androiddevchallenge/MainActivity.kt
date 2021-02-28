@@ -20,25 +20,32 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.androiddevchallenge.model.Pet
@@ -56,7 +63,7 @@ class MainActivity : AppCompatActivity() {
             "Golden Retriever",
             "Female",
             "Certified best loyal friend" +
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
             R.drawable.dog_0
         )
         val pet1 = Pet(
@@ -64,34 +71,31 @@ class MainActivity : AppCompatActivity() {
             "Corgi",
             "Male",
             "Short, cute legs" +
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
             R.drawable.dog_1
         )
         val pet2 = Pet(
             "AiBo",
             "Corgi",
             "Female",
-            "Cute and loyal"
-                    +
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
+            "Cute and loyal" +
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
             R.drawable.dog_2
         )
         val pet3 = Pet(
             "Mame",
             "Shiba",
             "Male",
-            "Wink that melts your heart"
-                    +
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
+            "Wink that melts your heart" +
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
             R.drawable.dog_3
         )
         val pet4 = Pet(
             "Kay",
             "Shiba",
             "Male",
-            "Beautiful tri color fur"
-                    +
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
+            "Beautiful tri color fur" +
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
             R.drawable.dog_4
         )
         val pet5 = Pet(
@@ -99,7 +103,7 @@ class MainActivity : AppCompatActivity() {
             "Mutt",
             "Male",
             "Super Idol, Instagram famous" +
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
             R.drawable.dog_5
         )
         val pet6 = Pet(
@@ -107,25 +111,23 @@ class MainActivity : AppCompatActivity() {
             "Golden Retriever",
             "Male",
             "Calm yet energetic" +
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
             R.drawable.dog_6
         )
         val pet7 = Pet(
             "Charles",
             "German Shepherd",
             "Female",
-            "Best friend you ever have"
-                    +
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
+            "Best friend you ever have" +
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
             R.drawable.dog_7
         )
         val pet8 = Pet(
             "Tini",
             "Chihuahua",
             "Female",
-            "Cute and small"
-                    +
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
+            "Cute and small" +
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
             R.drawable.dog_8
         )
         val pet9 =
@@ -133,9 +135,8 @@ class MainActivity : AppCompatActivity() {
                 "Blue",
                 "Golden Retriever",
                 "Male",
-                "Will make you smile all day"
-                        +
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
+                "Will make you smile all day" +
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ",
                 R.drawable.dog_9
             )
         petList = listOf(pet, pet1, pet2, pet3, pet4, pet5, pet6, pet7, pet8, pet9)
@@ -148,9 +149,7 @@ class MainActivity : AppCompatActivity() {
             launchPetDetailActivity(it)
         }
         setContent {
-            MyTheme {
-                MyApp()
-            }
+            MyApp()
         }
     }
 
@@ -164,7 +163,13 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun MyApp() {
     Surface(color = MaterialTheme.colors.background) {
-        PetList(petList = petList, onClick = onClick)
+        MyTheme {
+            Scaffold(
+                topBar = { AppBar() }
+            ) {
+                PetList(petList = petList, onClick = onClick)
+            }
+        }
     }
 }
 
@@ -175,6 +180,16 @@ fun PetList(petList: List<Pet>, onClick: (petItem: Pet) -> Unit) {
             PetItem(pet, onClick = onClick)
         }
     }
+}
+
+@Composable
+private fun AppBar() {
+    TopAppBar(
+        title = {
+            Text(text = stringResource(R.string.app_name))
+        },
+        backgroundColor = MaterialTheme.colors.primary
+    )
 }
 
 @Composable
@@ -189,14 +204,13 @@ fun PetItem(pet: Pet, onClick: (petItem: Pet) -> Unit) {
         Row(
             modifier = Modifier
                 .padding(8.dp)
-                .background(MaterialTheme.colors.surface)
         ) {
             Image(
                 painter = painterResource(id = pet.avatar),
                 contentDescription = "image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .border(1.dp, MaterialTheme.colors.secondary, shape = CircleShape)
+                    .border(1.dp, color = Color(0xccf2f4), shape = CircleShape)
                     .clip(shape = CircleShape)
                     .size(64.dp, 64.dp)
 
@@ -239,21 +253,5 @@ fun PetItem(pet: Pet, onClick: (petItem: Pet) -> Unit) {
                 )
             }
         }
-    }
-}
-
-@Preview("Light Theme", widthDp = 360, heightDp = 640)
-@Composable
-fun LightPreview() {
-    MyTheme {
-        MyApp()
-    }
-}
-
-@Preview("Dark Theme", widthDp = 360, heightDp = 640)
-@Composable
-fun DarkPreview() {
-    MyTheme(darkTheme = true) {
-        MyApp()
     }
 }

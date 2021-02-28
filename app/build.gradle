@@ -7,6 +7,12 @@ plugins {
 android {
     compileSdkVersion 30
 
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(11)
+        }
+    }
+
     defaultConfig {
         applicationId "com.example.androiddevchallenge"
         minSdkVersion 23
